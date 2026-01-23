@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+}
+
+.image {
+  z-index: 0;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.content {
+  position: absolute;
+  left: 0px;
+  top: 1.5rem;
+  width: 80%;
+  padding-left: 1.5rem;
+  padding-top: 2rem;
+}
+
+.type {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2.25rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+}
+
+.detail {
+  margin-top: 1.25rem;
+}
