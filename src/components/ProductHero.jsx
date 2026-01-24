@@ -8,7 +8,7 @@ const ProductHero = ({ product, imageUrl }) => {
   console.log("ProductHero", selectedColor, selectedColor, selectedMemorySize);
   return (
     <div
-    className="flex 
+      className="flex 
     flex-col 
     lg:flex-row-reverse
     pt-8 mt-4
@@ -51,13 +51,13 @@ const ProductHero = ({ product, imageUrl }) => {
           <button
             className="
             border
-           border-apple-blue"
+           border-apple-blue
             px-5
             py-2
             bg-transparent
             rounded-md
             hover:bg-apple-blue
-            hover:text-apple-gray-100
+            hover:text-apple-gray-100"
           >
             加入购物车
           </button>

@@ -13,7 +13,7 @@ const StyledProductTextContainer = styled.div`
 const StyledProductContainer = styled.div`
   max-width: 28rem;
   position: relative;
-  trasition: transform ${(props) => props.$transition || "0.1s"} ease-in-out;
+  transition: transform ${(props) => props.$transition || "0.1s"} ease-in-out;
 
   &:hover {
     transform: scale(${(props) => props.$scale || 1});
@@ -36,8 +36,8 @@ const NewArrival= ({
   };
   return (
     <StyledProductContainer
-      scale={scale}
-      transition="0.5s"
+      $scale={scale}
+      $transition="0.5s"
       onClick={() => onProductClick(title)}
     >
       <img style={imgStyle} src={image} alt="iPad Pro" />
