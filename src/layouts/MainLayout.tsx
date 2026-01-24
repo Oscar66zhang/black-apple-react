@@ -1,6 +1,14 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-const MainLayout = ({ header, content, footer }) => {
+const MainLayout = ({
+  header,
+  content,
+  footer,
+}: {
+  header?: ReactNode;
+  content?: ReactNode;
+  footer?: ReactNode;
+}) => {
   return (
     <div className="bg-apple-light dark:bg-apple-dark">
       {header ?? <h1>默认标题</h1>}

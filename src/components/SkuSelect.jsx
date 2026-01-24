@@ -1,5 +1,4 @@
 import { IoIosArrowDropdown } from "react-icons/io";
-import { useState } from "react";
 const SkuSelect = ({ placeholder, options, onChange, value }) => {
   return (
     <div className="w-24 relative">

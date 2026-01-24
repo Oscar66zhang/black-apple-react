@@ -1,5 +1,4 @@
 import React from "react";
-import NewArrival from "./NewArrival";
 
 const ReleaseNote = () => (
   <div>
@@ -15,7 +14,7 @@ const ProductNotFound = () => (
   </div>
 );
 
-const ListTitle = ({ title }) => (
+const ListTitle = ({ title }: { title: string }) => (
   <div style={{ display: "flex", justifyContent: "center" }}>
     <h1
       style={{
@@ -31,14 +30,23 @@ const ListTitle = ({ title }) => (
   </div>
 );
 
-function ProductList({ title, datalength, children }) {
+type ProductListProps = {
+  title?: string;
+  datalength: number;
+  children: React.ReactNode;
+};
+
+const ProductList = ({ title, datalength, children }: ProductListProps) => {
   const isReleased = new Date() <= new Date("2199-01-01");
+
   if (!isReleased) {
     return <ReleaseNote />;
   }
+
   if (datalength <= 0) {
     return <ProductNotFound />;
   }
+
   return (
     <div
       style={{
@@ -48,10 +56,10 @@ function ProductList({ title, datalength, children }) {
         rowGap: "3rem",
       }}
     >
-      <ListTitle title={title} />
+      <ListTitle title={title || ""} />
       {children}
     </div>
   );
-}
+};
 
 export default ProductList;
