@@ -1,11 +1,28 @@
 import React from "react";
 import SkuSelect from "./SkuSelect";
 import { useState } from "react";
+import { produce } from "immer";
+
+//使用函数柯里化
+const updateModel = (key, value) => {
+  /*
+  produce会帮你创建draft，这个draft是原始状态的代理副本，你可以随意更改
+  Immer会追踪你在draft上的所有改动，最后返回一个全新的不可变的对象
+  */
+  return produce((draft) => {
+    draft[key] = value;
+  });
+};
+
 const ProductHero = ({ product, imageUrl }) => {
-  const [selectedModel, setSelectedModel] = useState();
-  const [selectedColor, setSelectedColor] = useState();
-  const [selectedMemorySize, setSelectedMemorySize] = useState();
-  console.log("ProductHero", selectedColor, selectedColor, selectedMemorySize);
+  const [cartItem, setCartItem] = useState({
+    productId: product.id,
+    imageSrc: product.image,
+    model: null,
+    color: null,
+    memorySize: null,
+  });
+
   return (
     <div
       className="flex 
@@ -30,22 +47,30 @@ const ProductHero = ({ product, imageUrl }) => {
           <SkuSelect
             placeholder={"型号"}
             options={product.models.map((model) => model.name)}
-            onChange={setSelectedModel}
-            value={selectedModel}
+            onChange={(value) => {
+              setCartItem(updateModel("model", value));
+            }}
+            value={cartItem.model}
           />
 
           <SkuSelect
             placeholder={"颜色"}
             options={product.colors}
-            onChange={setSelectedColor}
-            value={selectedColor}
+            onChange={(value) => {
+              setCartItem(updateModel("color", value));
+              console.log(cartItem);
+            }}
+            value={cartItem.color}
           />
 
           <SkuSelect
             placeholder={"储存容量"}
             options={product.memorySizes.map((size) => size.name)}
-            onChange={setSelectedMemorySize}
-            value={selectedMemorySize}
+            onChange={(value) => {
+              setCartItem(updateModel("memorySize", value));
+              console.log(cartItem);
+            }}
+            value={cartItem.memorySize}
           />
 
           <button
@@ -58,6 +83,16 @@ const ProductHero = ({ product, imageUrl }) => {
             rounded-md
             hover:bg-apple-blue
             hover:text-apple-gray-100"
+            onClick={() => {
+              alert(
+                "加入购物车:" +
+                  cartItem.model +
+                  " " +
+                  cartItem.color +
+                  " " +
+                  cartItem.memorySize,
+              );
+            }}
           >
             加入购物车
           </button>

@@ -30,7 +30,7 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^[A-Z_]',varsIgnorePattern: '^[A-Z_]' }],
       'no-param-reassign': [
-        'error',
+        'warn',
         {
           props: true,
           ignorePropertyModificationsFor: ['ref'],
