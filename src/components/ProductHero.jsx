@@ -10,6 +10,7 @@ const updateModel = (key, value) => {
   Immer会追踪你在draft上的所有改动，最后返回一个全新的不可变的对象
   */
   return produce((draft) => {
+    // eslint-disable-next-line no-param-reassign
     draft[key] = value;
   });
 };
