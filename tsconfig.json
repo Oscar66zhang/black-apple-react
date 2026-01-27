@@ -12,6 +12,13 @@
     // See also https://aka.ms/tsconfig/module
     "module": "esnext",
     "moduleResolution": "bundler",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components": ["src/components/*"],
+      "~img/*": ["src/assets/images/*"],
+      "#types/*": ["src/types/*"]
+    },
     "target": "esnext",
     "types": [],
     // For nodejs:

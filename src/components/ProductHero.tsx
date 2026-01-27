@@ -2,26 +2,37 @@ import React from "react";
 import SkuSelect from "./SkuSelect";
 import { useState } from "react";
 import { produce } from "immer";
-
+import type { Product, CartItem } from "@/types/custom";
 //使用函数柯里化
-const updateModel = (key, value) => {
+const updateItem = (updates: Partial<CartItem>) => {
   /*
   produce会帮你创建draft，这个draft是原始状态的代理副本，你可以随意更改
   Immer会追踪你在draft上的所有改动，最后返回一个全新的不可变的对象
   */
+  // eslint-disable-next-line no-param-reassign
   return produce((draft) => {
-    // eslint-disable-next-line no-param-reassign
-    draft[key] = value;
+    Object.assign(draft, updates);
   });
 };
 
-const ProductHero = ({ product, imageUrl }) => {
-  const [cartItem, setCartItem] = useState({
+type ProductHeroProps = {
+  product: Product;
+  imageUrl: string;
+};
+
+const ProductHero = ({ product, imageUrl }: ProductHeroProps) => {
+  const [cartItem, setCartItem] = useState<CartItem>({
     productId: product.id,
+    name: product.name,
     imageSrc: product.image,
+    modelId: null,
+    modelPrice: null,
     model: null,
     color: null,
     memorySize: null,
+    memorySizeId: null,
+    memorySizePrice: null,
+    qty: 1,
   });
 
   return (
@@ -37,7 +48,11 @@ const ProductHero = ({ product, imageUrl }) => {
     "
     >
       <div className="flex-1 flex justify-center items-center">
-        <img src={imageUrl} className="w-[350px] lg:-mt-32 lg:ml-19" />
+        <img
+          src={imageUrl}
+          className="w-[350px] lg:-mt-32 lg:ml-19"
+          title={product.name}
+        />
       </div>
       <div className="flex-1 space-y-6 ml-6 md:ml-24">
         <div className="text-4xl font-black md:ml-24">购买{product.name}</div>
@@ -49,7 +64,17 @@ const ProductHero = ({ product, imageUrl }) => {
             placeholder={"型号"}
             options={product.models.map((model) => model.name)}
             onChange={(value) => {
-              setCartItem(updateModel("model", value));
+              const selectedModel = product.models.find(
+                (model) => model.name === value,
+              );
+              if (selectedModel)
+                setCartItem(
+                  updateItem({
+                    modelId: selectedModel.id,
+                    modelPrice: selectedModel.price,
+                    model: selectedModel.name,
+                  }),
+                );
             }}
             value={cartItem.model}
           />
@@ -58,7 +83,7 @@ const ProductHero = ({ product, imageUrl }) => {
             placeholder={"颜色"}
             options={product.colors}
             onChange={(value) => {
-              setCartItem(updateModel("color", value));
+              setCartItem(updateItem({ color: value as string }));
               console.log(cartItem);
             }}
             value={cartItem.color}
@@ -68,7 +93,18 @@ const ProductHero = ({ product, imageUrl }) => {
             placeholder={"储存容量"}
             options={product.memorySizes.map((size) => size.name)}
             onChange={(value) => {
-              setCartItem(updateModel("memorySize", value));
+              const selectedMemorySize = product.memorySizes.find(
+                (size) => size.name === value,
+              );
+              if (selectedMemorySize) {
+                setCartItem(
+                  updateItem({
+                    memorySizeId: selectedMemorySize.id,
+                    memorySizePrice: selectedMemorySize.price,
+                    memorySize: selectedMemorySize.name,
+                  }),
+                );
+              }
               console.log(cartItem);
             }}
             value={cartItem.memorySize}
@@ -85,14 +121,7 @@ const ProductHero = ({ product, imageUrl }) => {
             hover:bg-apple-blue
             hover:text-apple-gray-100"
             onClick={() => {
-              alert(
-                "加入购物车:" +
-                  cartItem.model +
-                  " " +
-                  cartItem.color +
-                  " " +
-                  cartItem.memorySize,
-              );
+              alert("加入购物车:" + JSON.stringify(cartItem));
             }}
           >
             加入购物车

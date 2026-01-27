@@ -7,8 +7,9 @@ import withBanner from "@/HOCS/withBanner";
 import ImageHero from "@/components/ImageHero";
 import { SUGGESTED_PROUDCT } from "../assets/data";
 import ProductHero from "@/components/ProductHero";
+import type { NewArrivalProps } from "@/components/NewArrival";
 
-const NewArrivalWithSoldOutCheck = withSoldOut((props) => {
+const NewArrivalWithSoldOutCheck = withSoldOut((props: NewArrivalProps) => {
   const { title } = props;
   return <NewArrival {...props} title={"商品:" + title} />;
 });
@@ -24,10 +25,20 @@ function Home() {
   return (
     <div>
       <ImageHero />
-      <ProductHero product={SUGGESTED_PROUDCT.product} imageUrl={SUGGESTED_PROUDCT.imageSrc} />
-      <ProductList title={"上新品，各个添新意"} datalength={NEW_ARRIVALS_LIST}>
+      <ProductHero
+        product={SUGGESTED_PROUDCT.product}
+        imageUrl={SUGGESTED_PROUDCT.imageSrc}
+      />
+      <ProductList
+        title={"上新品，各个添新意"}
+        datalength={NEW_ARRIVALS_LIST.length}
+      >
         {NEW_ARRIVALS_LIST.map((item) => (
-          <NewArrivalWithBannerAndSoldOutCheck key={item.title} {...item} scale={1.05} />
+          <NewArrivalWithBannerAndSoldOutCheck
+            key={item.title}
+            {...item}
+            scale={1.05}
+          />
         ))}
       </ProductList>
 

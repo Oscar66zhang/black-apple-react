@@ -6,6 +6,7 @@ export const product = {
   detail: "超强性能，超长续航 RMB 19999 起 +++ ",
   image: ipad_pro_image,
   textColor: "white",
+  soldOut: false,
 };
 
 export const product2 = {

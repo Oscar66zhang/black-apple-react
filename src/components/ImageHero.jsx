@@ -1,6 +1,8 @@
-import Button from "./Button.tsx";
+import IconButton from "./IconButton";
 import hero_image from "@/assets/images/hero.jpg";
 import hero_small_image from "@/assets/images/hero_small.jpg";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { MdOutlineNavigateNext } from "react-icons/md";
 
 const ImageHero = () => {
   return (
@@ -16,8 +18,17 @@ const ImageHero = () => {
       <div className="absolute inset-4 flex flex-col p-2 items-center justify-end text-center md:justify-start">
         <div className="text-4xl md:text-6xl font-bold">iPhone 14 Pro</div>
         <div className="mt-4 flex space-x-4">
-          <Button title="进一步了解" variant="primary" />
-          <Button title="购买" variant="outline" />
+          <IconButton
+            icon={<MdOutlineNavigateNext />}
+            ioconPosition="right"
+            title="进一步了解"
+            variant="primary"
+          />
+          <IconButton
+            icon={<AiOutlineShoppingCart />}
+            title="购买"
+            variant="outline"
+          />
         </div>
       </div>
     </div>

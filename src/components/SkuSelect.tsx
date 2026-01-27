@@ -1,5 +1,18 @@
 import { IoIosArrowDropdown } from "react-icons/io";
-const SkuSelect = ({ placeholder, options, onChange, value }) => {
+
+interface SkuSelectProps {
+  placeholder: string;
+  options: string[];
+  onChange: (value: string) => void;
+  value?: string | null;
+}
+
+const SkuSelect = ({
+  placeholder,
+  options,
+  onChange,
+  value,
+}: SkuSelectProps) => {
   return (
     <div className="w-24 relative">
       <select
@@ -15,6 +28,7 @@ const SkuSelect = ({ placeholder, options, onChange, value }) => {
        "
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
+        title={placeholder}
       >
         <option value="">{placeholder}</option>
         {options.map((options) => (

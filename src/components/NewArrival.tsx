@@ -1,7 +1,11 @@
 import styles from "./Product.module.css";
 import styled from "styled-components";
 
-const StyledProductTextContainer = styled.div`
+type StyledProductTextContainerProps = {
+  $textColor: string | undefined;
+};
+
+const StyledProductTextContainer = styled.div<StyledProductTextContainerProps>`
   position: absolute;
   top: 1.5rem;
   padding-left: 1.5rem;
@@ -10,7 +14,12 @@ const StyledProductTextContainer = styled.div`
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 `;
 
-const StyledProductContainer = styled.div`
+type StyledProductContainerProps = {
+  $scale?: number;
+  $transition?: string;
+};
+
+const StyledProductContainer = styled.div<StyledProductContainerProps>`
   max-width: 28rem;
   position: relative;
   transition: transform ${(props) => props.$transition || "0.1s"} ease-in-out;
@@ -21,14 +30,23 @@ const StyledProductContainer = styled.div`
   }
 `;
 
-const NewArrival= ({
+export type NewArrivalProps = {
+  image: string;
+  title: string;
+  detail: string;
+  textColor?: string;
+  scale?: number;
+  onProductClick: (title: string) => void;
+};
+
+const NewArrival = ({
   image,
   title,
   detail,
   textColor,
   scale = 1.05,
   onProductClick,
-}) => {
+}: NewArrivalProps) => {
   const imgStyle = {
     height: "auto",
     width: "100%",
