@@ -1,0 +1,14 @@
+// 重新导出（Re-export）所有页面组件
+export { default as Home } from "./Home";
+export { default as About } from "./About";
+export { default as Computers } from "./Computers";
+export { default as IPad } from "./Ipad";
+export { default as Entertainment } from "./Entertainment";
+export { default as Support } from "./Support";
+export { default as Phones } from "./Phones";
+export { default as SmartHome } from "./SmartHome";
+export { default as SignIn } from "./SignIn";
+export { default as Register } from "./Register";
+export { default as NotFound } from "./NotFound";
+export { default as ErrorPage } from "./ErrorPage";
+export { default as ProductDetail } from "./ProductDetail";

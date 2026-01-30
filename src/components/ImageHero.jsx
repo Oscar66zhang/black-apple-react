@@ -3,8 +3,9 @@ import hero_image from "@/assets/images/hero.jpg";
 import hero_small_image from "@/assets/images/hero_small.jpg";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineNavigateNext } from "react-icons/md";
-
+import { useNavigate } from "react-router-dom";
 const ImageHero = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative bg-black text-white mb-2">
       <img
@@ -23,6 +24,7 @@ const ImageHero = () => {
             ioconPosition="right"
             title="进一步了解"
             variant="primary"
+            onClick={() => navigate("/product-detail/1")}
           />
           <IconButton
             icon={<AiOutlineShoppingCart />}
