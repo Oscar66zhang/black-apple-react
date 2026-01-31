@@ -6,6 +6,23 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 const ImageHero = () => {
   const navigate = useNavigate();
+  function sleepSync(milliseconds: number) {
+    // const start=Date.now();
+    // while(Date.now()-start<milliseconds){
+    //   //do nothing
+    // }
+    return new Promise((resolve) => {
+      setTimeout(resolve, milliseconds);
+    });
+  }
+
+  const fakeFetchData = () => {
+    sleepSync(10000).then(() => {
+      console.log("数据获取完成");
+      navigate("/product-detail/1");
+    }); //阻塞10秒
+  };
+
   return (
     <div className="relative bg-black text-white mb-2">
       <img
@@ -21,10 +38,13 @@ const ImageHero = () => {
         <div className="mt-4 flex space-x-4">
           <IconButton
             icon={<MdOutlineNavigateNext />}
-            ioconPosition="right"
+            iconPosition="right"
             title="进一步了解"
             variant="primary"
-            onClick={() => navigate("/product-detail/1")}
+            onClick={() => {
+              fakeFetchData();
+              navigate("/product-detail/1");
+            }}
           />
           <IconButton
             icon={<AiOutlineShoppingCart />}

@@ -12,6 +12,10 @@ function SignIn() {
       alert("邮箱或密码错误");
       return;
     }
+
+    //模拟登录逻辑
+    localStorage.setItem("token", "mocked_token");
+
     //模拟登陆逻辑
     navigate(
       location.state?.from || "/", //优先挑战来源页

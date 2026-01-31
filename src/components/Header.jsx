@@ -7,7 +7,7 @@ import { useState } from "react";
 // 深色模式切换组件
 import DarkToggle from "./DarkToggle";
 // 路由导航
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // 顶部导航配置数据
 import { SHOPPING_PAGES } from "../assets/data/path";
 
@@ -16,6 +16,18 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   // 控制搜索框是否显示
   const [isSearchEnable, setIsSearchEnable] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (query.trim()) {
+        navigate(`/search?query=${encodeURIComponent(query)}`);
+        setQuery("");
+      }
+    }
+  };
 
   return (
     // 顶部导航栏（吸顶 + 毛玻璃效果）
@@ -54,9 +66,7 @@ const Header = () => {
             // 根据当前路由高亮导航项
             className={({ isActive }) =>
               `hover:text-apple-blue ${
-                isActive
-                  ? "text-apple-blue"
-                  : "transition-colors"
+                isActive ? "text-apple-blue" : "transition-colors"
               }`
             }
           >
@@ -78,18 +88,21 @@ const Header = () => {
               focus:ring-apple-blue
               transition
             "
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           {/* 浮动标签 */}
           <label
-            className="
-              absolute left-2 top-2
-              peer-focus:-top-2
-              peer-focus:text-xs
-              peer-focus:text-apple-blue
-              transition
-              text-apple-text-light
-              dark:text-apple-text-dark
-            "
+            className="absolute left-2 top-2
+            peer-focus:-top-2
+            peer-focus:text-xs
+            peer-focus:text-apple-blue
+            transition
+            text-apple-text-light
+            dark:text-apple-text-dark
+          "
           >
             搜索
           </label>
@@ -98,11 +111,10 @@ const Header = () => {
 
       {/* 右侧功能按钮区域 */}
       <div
-        className="
-          flex items-center gap-2
-          text-apple-text-light
-          dark:text-apple-text-dark
-        "
+        className="gap-2 
+        text-apple-text-light
+        dark:text-apple-text-dark 
+        space-x-2"
       >
         {/* 搜索按钮 */}
         <button onClick={() => setIsSearchEnable(!isSearchEnable)}>

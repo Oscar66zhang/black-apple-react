@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Footer, Header } from "@/components";
 import MainLayout from "@/layouts/MainLayout";
+import UserLayout from "@/layouts/UserLayout";
 import BlankLayout from "@/layouts/BlankLayout";
 import Home from "../pages/Home";
 import {
@@ -16,7 +17,10 @@ import {
   NotFound,
   ErrorPage,
   ProductDetail,
+  SearchResults,
+  UserCenter,
 } from "../pages";
+import RequireAuth from "@/HOCS/RequireAuth";
 
 const router = createBrowserRouter([
   //根目录 "/"
@@ -48,6 +52,11 @@ const router = createBrowserRouter([
         element: <ProductDetail />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "search",
+        element: <SearchResults />,
+        errorElement: <ErrorPage />,
+      },
       { path: "*", element: <NotFound />, errorElement: <ErrorPage /> },
     ],
   },
@@ -59,6 +68,15 @@ const router = createBrowserRouter([
       { path: "signin", element: <SignIn />, errorElement: <ErrorPage /> },
       { path: "register", element: <Register />, errorElement: <ErrorPage /> },
     ],
+  },
+  {
+    path: "/user",
+    element: (
+      <RequireAuth>
+        <UserLayout />
+      </RequireAuth>
+    ),
+    children: [{ path: "", element: <UserCenter /> }],
   },
 ]);
 
