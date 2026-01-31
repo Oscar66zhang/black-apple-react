@@ -16,12 +16,21 @@ const SearchResults = () => {
   useEffect(() => {
     //副作用逻辑
     fetch(`http://localhost:5293/api/products?keyword=${query}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Fetched data:", data);
         setSearchResults(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setSearchResults([]);
       });
-  }, []); //依赖数组
+  }, [query]); //依赖数组
   //空数组：[]:只在组件挂载 [mount] 时执行一次
   //有依赖：依赖变化时重新执行
   //不写依赖：每次渲染都会执行 (不推荐，容易浪费性能)

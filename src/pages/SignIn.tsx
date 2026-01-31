@@ -24,7 +24,7 @@ function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-black via-gray-800 to-gray-900 flex items-center justify-center p-4">
       <div className="relative w-full max-w-md">
         {/* 毛玻璃效果背景 */}
         <div className="absolute inset-0 bg-white/5 backdrop-blur-xl rounded-3xl shadow-xl border border-white/10" />
