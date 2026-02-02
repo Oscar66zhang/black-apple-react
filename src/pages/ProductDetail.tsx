@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLoaderData } from "react-router-dom";
+import type { Product } from "@/types/custom";
 import { product_list } from "../assets/data/products";
 import { useNavigate } from "react-router-dom";
 type ParamsType = {
@@ -7,10 +8,7 @@ type ParamsType = {
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  const { id } = useParams<ParamsType>();
-  const product = id
-    ? product_list.find((item) => item.id === parseInt(id))
-    : undefined;
+  const product = useLoaderData<Product>();
   if (!product) {
     // return <div>Product not found</div>;
     navigate("/404", { replace: true });
@@ -20,7 +18,7 @@ const ProductDetail = () => {
     <div>
       <h1>Product Detail</h1>
       <p>This is the product detail page</p>
-      <p>{JSON.stringify(product)}</p>
+      <p>{JSON.stringify(product.features)}</p>
     </div>
   );
 };

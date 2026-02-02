@@ -30,11 +30,11 @@ const SearchResults = () => {
       }
       const data = await response.json();
       setSearchResults(data);
-    } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") {
+    } catch (error: any) {
+      if (error.name === "AbortError") {
         return;
       }
-      console.error("Error fetching data:", error);
+      console.error("Error fetching search results:", error);
       setSearchResults([]);
     }
   };
@@ -108,7 +108,7 @@ const SearchResults = () => {
                 <Button
                   title="了解更多"
                   variant="outline"
-                  onClick={() => navigate(`/products/${product.id}`)}
+                  onClick={() => navigate(`/product-detail/${product.id}`)}
                 />
               </div>
             </div>

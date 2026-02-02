@@ -1,4 +1,4 @@
-import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
+import { createBrowserRouter, type LoaderFunctionArgs } from "react-router-dom";
 import { Footer, Header } from "@/components";
 import MainLayout from "@/layouts/MainLayout";
 import UserLayout from "@/layouts/UserLayout";
