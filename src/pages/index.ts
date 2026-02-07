@@ -11,6 +11,6 @@ export { default as SignIn } from "./SignIn";
 export { default as Register } from "./Register";
 export { default as NotFound } from "./NotFound";
 export { default as ErrorPage } from "./ErrorPage";
-export { default as ProductDetail } from "./ProductDetail";
+export { default as ProductDetail } from "./ProductDetail/ProductDetail";
 export { default as SearchResults } from "./SearchResults";
 export { default as UserCenter } from "./UserCenter";
