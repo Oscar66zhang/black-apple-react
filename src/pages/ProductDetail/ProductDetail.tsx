@@ -9,6 +9,7 @@ import ProductHero from "./ProductHero";
 import SelectTitle from "./SelectTitle";
 import SelectSquare from "./SelectSquare";
 import SelectCircle from "./SelectCircle";
+import PriceTag from "./PriceTag";
 
 type ParamsType = {
   id: string;
@@ -91,8 +92,15 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div>价格标签</div>
-      <Button title="加入购物车" />
+      <PriceTag
+        modelAmount={selectedModel?.price}
+        colorAmount={selectedColor ? 0 : undefined} //假设颜色不额外收费
+        sizeAmount={selectedMemorySize?.price}
+        totalAmount={totalAmount}
+      />
+      <div className="flex justify-end mt-12 mr-8">
+        <Button title="加入购物车" />
+      </div>
     </div>
   );
 };
