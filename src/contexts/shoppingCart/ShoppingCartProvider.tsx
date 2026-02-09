@@ -1,4 +1,4 @@
-import { ShoppingCartContext } from "./ShoppingCartContext";
+import ShoppingCartContext from "./ShoppingCartContext";
 import { useState } from "react";
 import { CartItem } from "@/types/custom";
 

@@ -13,6 +13,8 @@ const defaultShoppingCartContext: ShoppingCartContextType = {
   removeFromCart: () => {},
 };
 
-export const ShoppingCartContext = createContext<ShoppingCartContextType>(
+const ShoppingCartContext = createContext<ShoppingCartContextType>(
   defaultShoppingCartContext,
 );
+
+export default ShoppingCartContext;
