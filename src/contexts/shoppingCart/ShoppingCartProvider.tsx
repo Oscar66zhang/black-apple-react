@@ -1,6 +1,6 @@
-import { ShoppingCartContext } from "./shoppingCartContext";
+import { ShoppingCartContext } from "./ShoppingCartContext";
 import { useState } from "react";
-import { type CartItem } from "@/types/custom";
+import { CartItem } from "@/types/custom";
 
 interface ShoppingCartProviderProps {
   children: React.ReactNode;
@@ -8,28 +8,21 @@ interface ShoppingCartProviderProps {
 
 const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
   const addToCart = (item: CartItem) => {
     const existingItemIndex = cartItems.findIndex(
-      (cartItems) => cartItems.productId == item.productId,
+      (cartItem) => cartItem.productId === item.productId,
     );
     if (existingItemIndex !== -1) {
       // If the item already exists, update the quantity
-      setCartItems((prevItems) => {
-        const item = prevItems[existingItemIndex];
-        // Ensure we handle the case where item might be undefined (though index check prevents it logically)
-        if (!item) return prevItems;
-
-        const updatedItem: CartItem = {
-          ...item,
-          qty: (item.qty ?? 0) + 1,
-        };
-
-        return [
-          ...prevItems.slice(0, existingItemIndex),
-          updatedItem,
-          ...prevItems.slice(existingItemIndex + 1),
-        ];
-      });
+      setCartItems((prevItems) => [
+        ...prevItems.slice(0, existingItemIndex),
+        {
+          ...prevItems[existingItemIndex],
+          quantity: (prevItems[existingItemIndex]?.qty ?? 0) + 1,
+        },
+        ...prevItems.slice(existingItemIndex + 1),
+      ]);
     } else {
       // If the item does not exist, add it to the cart
       setCartItems((prevItems) => [...prevItems, item]);
