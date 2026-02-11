@@ -11,7 +11,7 @@ const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
 
   const addToCart = (item: CartItem) => {
     const existingItemIndex = cartItems.findIndex(
-      (cartItem) => cartItem.productId === item.productId,
+      (cartItem) => cartItem.productId === item.productId
     );
     if (existingItemIndex !== -1) {
       // If the item already exists, update the quantity

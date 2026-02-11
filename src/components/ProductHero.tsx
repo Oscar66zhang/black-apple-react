@@ -1,8 +1,9 @@
 import React from "react";
 import SkuSelect from "./SkuSelect";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { produce } from "immer";
 import type { Product, CartItem } from "@/types/custom";
+import { ShoppingCartContext } from "@/contexts/shoppingCart";
 //使用函数柯里化
 const updateItem = (updates: Partial<CartItem>) => {
   /*
@@ -21,6 +22,7 @@ type ProductHeroProps = {
 };
 
 const ProductHero = ({ product, imageUrl }: ProductHeroProps) => {
+  const { addToCart } = useContext(ShoppingCartContext);
   const [cartItem, setCartItem] = useState<CartItem>({
     productId: product.id,
     name: product.name,
@@ -34,6 +36,22 @@ const ProductHero = ({ product, imageUrl }: ProductHeroProps) => {
     memorySizePrice: null,
     qty: 1,
   });
+
+  const handleAddToCart = () => {
+    if (
+      !cartItem.model ||
+      !cartItem.color ||
+      !cartItem.memorySize ||
+      !cartItem.modelId ||
+      !cartItem.memorySizeId
+    ) {
+      alert("请选择型号、颜色、储存容量");
+      return;
+    }
+    addToCart(cartItem);
+    alert("已加入购物车");
+    console.log("已加入购物车:", cartItem);
+  };
 
   return (
     <div
@@ -109,19 +127,16 @@ const ProductHero = ({ product, imageUrl }: ProductHeroProps) => {
             }}
             value={cartItem.memorySize}
           />
-
           <button
             className="
-            border
-           border-apple-blue
-            px-5
-            py-2
-            bg-transparent
+            border border-apple-blue
+            px-5 py-2 bg-transparent
             rounded-md
             hover:bg-apple-blue
-            hover:text-apple-gray-100"
+            hover:text-apple-gray-100
+          "
             onClick={() => {
-              alert("加入购物车:" + JSON.stringify(cartItem));
+              handleAddToCart();
             }}
           >
             加入购物车

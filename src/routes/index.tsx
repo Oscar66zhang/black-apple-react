@@ -1,9 +1,8 @@
-import { createBrowserRouter, type LoaderFunctionArgs } from "react-router-dom";
-import { Footer, Header } from "@/components";
+import { Footer, Header, Skeleton } from "@/components";
+import BlankLayout from "@/layouts/BlankLayout";
 import MainLayout from "@/layouts/MainLayout";
 import UserLayout from "@/layouts/UserLayout";
-import BlankLayout from "@/layouts/BlankLayout";
-import Home from "../pages/Home";
+import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
 import {
   About,
   Computers,
@@ -14,11 +13,13 @@ import {
   SmartHome,
   SignIn,
   Register,
+  Home,
   NotFound,
   ErrorPage,
   ProductDetail,
   SearchResults,
   UserCenter,
+  ShoppingCart,
 } from "../pages";
 import RequireAuth from "@/HOCS/RequireAuth";
 import { loadProducts } from "@/helpers/loaders";
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout header={<Header />} footer={<Footer />} />,
+    hydrateFallbackElement: <Skeleton />,
     children: [
       {
         index: true, //默认子路由
@@ -68,6 +70,7 @@ const router = createBrowserRouter([
         element: <SearchResults />,
         errorElement: <ErrorPage />,
       },
+      { path: "/cart", element: <ShoppingCart /> },
       { path: "*", element: <NotFound />, errorElement: <ErrorPage /> },
     ],
   },

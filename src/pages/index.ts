@@ -14,3 +14,4 @@ export { default as ErrorPage } from "./ErrorPage";
 export { default as ProductDetail } from "./ProductDetail/ProductDetail";
 export { default as SearchResults } from "./SearchResults";
 export { default as UserCenter } from "./UserCenter";
+export { default as ShoppingCart } from "./ShoppingCart";

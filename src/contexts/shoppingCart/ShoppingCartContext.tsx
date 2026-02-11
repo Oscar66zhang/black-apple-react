@@ -1,4 +1,4 @@
-import type { CartItem } from "@/types/custom";
+import { CartItem } from "@/types/custom";
 import { createContext } from "react";
 
 interface ShoppingCartContextType {

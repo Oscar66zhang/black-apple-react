@@ -98,7 +98,7 @@ const ProductDetail = () => {
         sizeAmount={selectedMemorySize?.price}
         totalAmount={totalAmount}
       />
-      <div className="flex justify-end mt-12 mr-8">
+      <div className="flex justify-en··d mt-12 mr-8">
         <Button title="加入购物车" />
       </div>
     </div>

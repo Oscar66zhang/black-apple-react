@@ -20,3 +20,4 @@ export { default as ProductList } from "./ProductList";
 export * from "./ProductList";
 export { default as SkuSelect } from "./SkuSelect";
 export * from "./SkuSelect";
+export * from "./Skeleton";
