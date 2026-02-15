@@ -1,5 +1,5 @@
 import ShoppingCartContext from "./ShoppingCartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartItem } from "@/types/custom";
 
 interface ShoppingCartProviderProps {
@@ -7,11 +7,22 @@ interface ShoppingCartProviderProps {
 }
 
 const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    } else {
+      localStorage.removeItem("cart");
+    }
+  }, [cartItems]);
 
   const addToCart = (item: CartItem) => {
     const existingItemIndex = cartItems.findIndex(
-      (cartItem) => cartItem.productId === item.productId
+      (cartItem) => cartItem.productId === item.productId,
     );
     if (existingItemIndex !== -1) {
       // If the item already exists, update the quantity
@@ -36,9 +47,23 @@ const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
     ]);
   };
 
+  const updateItem = (index: number, newItem: CartItem) => {
+    setCartItems((prevItems) => {
+      if (index < 0 || index >= prevItems.length) {
+        console.error("Index out of bounds");
+        return prevItems;
+      }
+      return [
+        ...prevItems.slice(0, index),
+        newItem,
+        ...prevItems.slice(index + 1),
+      ];
+    });
+  };
+
   return (
     <ShoppingCartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart }}
+      value={{ cartItems, addToCart, removeFromCart, updateItem }}
     >
       {children}
     </ShoppingCartContext.Provider>

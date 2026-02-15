@@ -21,3 +21,5 @@ export * from "./ProductList";
 export { default as SkuSelect } from "./SkuSelect";
 export * from "./SkuSelect";
 export * from "./Skeleton";
+export { default as CartItem } from "./CartItem";
+export * from "./CartItem";

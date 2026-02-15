@@ -2,7 +2,7 @@ import { useParams, useLoaderData } from "react-router-dom";
 import type { Product, Color, ProductModel, MemorySize } from "@/types/custom";
 import { product_list } from "../../assets/data/products";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductTitle from "./ProductTitle";
 import Button from "@/components/Button";
 import ProductHero from "./ProductHero";
@@ -10,12 +10,15 @@ import SelectTitle from "./SelectTitle";
 import SelectSquare from "./SelectSquare";
 import SelectCircle from "./SelectCircle";
 import PriceTag from "./PriceTag";
+import { ShoppingCartContext } from "@/contexts/shoppingCart";
+import { CartItem } from "@/types/custom";
 
 type ParamsType = {
   id: string;
 };
 
 const ProductDetail = () => {
+  const { addToCart } = useContext(ShoppingCartContext);
   const [selectedModel, setSelectedModel] = useState<ProductModel>();
   const [selectedColor, setSelectedColor] = useState<Color>();
   const [selectedMemorySize, setSelectedMemorySize] = useState<MemorySize>();
@@ -35,6 +38,26 @@ const ProductDetail = () => {
       0 + (selectedModel?.price ?? 0) + (selectedMemorySize?.price ?? 0);
     setTotalAmount(total);
   }, [product, selectedModel, selectedMemorySize, selectedColor]);
+
+  const handleAddToCart = () => {
+    if (!product || !selectedModel || !selectedMemorySize || !selectedColor) {
+      return;
+    }
+    const cartItem: CartItem = {
+      productId: product.id,
+      name: product.name,
+      imageSrc: product.image,
+      modelId: selectedModel.id,
+      modelPrice: selectedModel.price,
+      model: selectedModel.name,
+      color: selectedColor,
+      memorySize: selectedMemorySize.name,
+      memorySizeId: selectedMemorySize.id,
+      memorySizePrice: selectedMemorySize.price,
+      qty: 1,
+    };
+    addToCart(cartItem);
+  };
 
   return (
     <div className="min-h-screen px-4 lg:px-32 mt-4 mb-40 text-apple-text-light dark:text-apple-text-dark">
@@ -98,8 +121,8 @@ const ProductDetail = () => {
         sizeAmount={selectedMemorySize?.price}
         totalAmount={totalAmount}
       />
-      <div className="flex justify-en··d mt-12 mr-8">
-        <Button title="加入购物车" />
+      <div className="flex justify-end mt-12 mr-8">
+        <Button title="加入购物车" onClick={handleAddToCart} />
       </div>
     </div>
   );

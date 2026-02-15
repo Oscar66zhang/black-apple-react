@@ -49,8 +49,6 @@ const ProductHero = ({ product, imageUrl }: ProductHeroProps) => {
       return;
     }
     addToCart(cartItem);
-    alert("已加入购物车");
-    console.log("已加入购物车:", cartItem);
   };
 
   return (

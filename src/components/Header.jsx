@@ -4,12 +4,16 @@ import {
   AiOutlineSearch,
   AiOutlineShopping,
 } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import DarkToggle from "./DarkToggle";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SHOPPING_PAGES } from "../assets/data/path";
+import { ShoppingCartContext } from "@/contexts/shoppingCart";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Header = () => {
+  const { cartItems } = useContext(ShoppingCartContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchEnable, setIsSearchEnable] = useState(false);
   const [query, setQuery] = useState("");
@@ -87,12 +91,29 @@ const Header = () => {
         dark:text-apple-text-dark 
         space-x-2"
       >
-        <button onClick={() => setIsSearchEnable(!isSearchEnable)}>
+        <button onClick={() => setIsSearchEnable((prev) => !prev)}>
           <AiOutlineSearch size={24} />
         </button>
         <DarkToggle />
-        <button onClick={() => navigate("/cart")}>
+        <button onClick={() => navigate("/cart")} className="relative">
           <AiOutlineShopping size={24} />
+          <AnimatePresence>
+            {cartItems.length > 0 && (
+              <motion.span
+                className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2
+              bg-apple-red text-white text-xs font-bold w-5 h-5 rounded-full
+              flex items-center justify-center
+              "
+                key={cartItems.length} //让动画在数字变化时重新触发
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              >
+                {cartItems.length}
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
         <button className="md:hidden" onClick={() => setIsOpen(true)}>
           <AiOutlineMenu size={24} />

@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import React, { ReactNode } from "react";
 export interface ButtonProps {
   title?: ReactNode;
   variant?: "primary" | "outline";

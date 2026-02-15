@@ -5,14 +5,18 @@ import { useState } from "react";
 const DarkToggle = () => {
   const [isDark, setIsDark] = useState(false);
   const toggleDark = () => {
-    setIsDark(!isDark);
+    setIsDark((prev) => {
+      const newDarkMode = !prev;
+      const root = document.documentElement;
+      if (newDarkMode) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+      return newDarkMode;
+    });
   };
-  const root = document.documentElement;
-  if (isDark) {
-    root.classList.add("dark");
-  } else {
-    root.classList.remove("dark");
-  }
+
   return (
     <button
       className="p-1
