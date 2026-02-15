@@ -1,8 +1,13 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import type { Product } from "@/types/custom";
 import { useDebounce } from "@/helpers/useDebounce";
 import Button from "@/components/Button";
+import SearchResultCard from "@/components/SearchResultCard";
+import { ShoppingCartContext } from "@/contexts/shoppingCart";
+import FilterButton from "@/components/FilterButton";
+
+const filters = ["全部", "电脑", "手机", "平板", "其他"];
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -62,6 +67,37 @@ const SearchResults = () => {
     };
   }, [query]); //依赖数组
 
+  const { addToCart } = useContext(ShoppingCartContext);
+  const handleAddToCart = useCallback((product: Product) => {
+    const cartItem = {
+      productId: product.id,
+      name: product.name,
+      imageSrc: product.image,
+      modelId: product.models[0].id,
+      model: product.models[0].name,
+      modelPrice: product.models[0].price,
+      memorySizeId: product.memorySizes[0].id,
+      memorySize: product.memorySizes[0].name,
+      memorySizePrice: product.memorySizes[0].price,
+      color: product.colors[0],
+      price:
+        product.startingPrice +
+        product.models[0].price +
+        product.memorySizes[0].price,
+      qty: 1,
+    };
+    addToCart(cartItem);
+  }, []);
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("全部");
+
+  const filteredProducts = searchResults.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "全部" || product.category === selectedCategory;
+    console.log("过滤后的产品:", product);
+    return matchesCategory;
+  });
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto mb-12">
@@ -81,41 +117,27 @@ const SearchResults = () => {
         />
         <p className="mt-6">搜索关键词：{query}</p>
       </div>
+
+      <div className="max-w-4xl mx-auto mb-8 flex gap-4">
+        {filters.map((filter) => (
+          <FilterButton
+            key={filter}
+            filter={filter}
+            isSelected={false}
+            onClick={() => {
+              setSelectedCategory(filter);
+            }}
+          />
+        ))}
+      </div>
+
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {searchResults.map((product) => (
-          <div
+        {filteredProducts.map((product) => (
+          <SearchResultCard
             key={product.id}
-            className="bg-apple-gray-100 dark:bg-apple-gray-900 dark:border-apple-gray-500
-              rounded-2xl shadow-sm p-6
-              hover:transform hover:scale-105 transition-all duration-300
-            "
-          >
-            <div className="aspect-square object-contain rounded-xl">
-              <img
-                className="w-full h-full object-contain rounded-xl"
-                src={product.image}
-                alt={product.image}
-              />
-            </div>
-            <h3 className="text-2xl font-semibold mt-2">{product.name}</h3>
-            <p className="text-gray-400 mb-4">{product.title}</p>
-            <div className="flex items-center justify-between">
-              <span className="text-2xl font-medium">
-                {product.startingPrice}
-              </span>
-              <div className="flex gap-3">
-                <Button title="立即购买" variant="primary" />
-                <Button
-                  title="了解更多"
-                  variant="outline"
-                  onClick={() => navigate(`/product-detail/${product.id}`)}
-                />
-              </div>
-            </div>
-            {!product.inStock && (
-              <div className="mt-4 text-red-400">暂时缺货</div>
-            )}
-          </div>
+            product={product}
+            onAddToCart={handleAddToCart}
+          />
         ))}
       </div>
       <div className="flex items-center justify-center mt-8 gap-6">
