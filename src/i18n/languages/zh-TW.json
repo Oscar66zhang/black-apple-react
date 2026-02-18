@@ -1,0 +1,37 @@
+{
+  "routes": {
+    "store": "商店",
+    "mac": "電腦",
+    "phone": "手機",
+    "ipad": "iPad",
+    "entertainment": "娛樂",
+    "support": "技術支援",
+    "register": "註冊",
+    "login": "登入",
+    "account": "管理你的帳戶",
+    "orders": "訂單歷史"
+  },
+  "header": {
+    "search": "搜尋"
+  },
+  "footer": {
+    "copyright": "版權所有 @ 2099 BlackApple Inc. 保留所有權利"
+  },
+  "home_page": {
+    "image_hero": {
+      "product_name": "iPhone 14 Pro",
+      "learn_more": "進一步了解",
+      "buy": "購買"
+    },
+    "product_hero": {
+      "title": "購買 iPhone 16 Pro",
+      "price": "RMB 7,999 起",
+      "model": "型號",
+      "color": "外觀",
+      "memory": "儲存容量",
+      "add_cart": "加入購物車"
+    },
+    "newarrivals": "新品上市",
+    "offers": "福利活動"
+  }
+}

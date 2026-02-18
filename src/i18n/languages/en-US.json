@@ -1,0 +1,37 @@
+{
+  "routes": {
+    "store": "Store",
+    "mac": "Mac",
+    "phone": "iPhone",
+    "ipad": "iPad",
+    "entertainment": "Entertainment",
+    "support": "Support",
+    "register": "Sign Up",
+    "login": "Log In",
+    "account": "Manage Your Account",
+    "orders": "Order History"
+  },
+  "header": {
+    "search": "Search"
+  },
+  "footer": {
+    "copyright": "Copyright @ 2099 BlackApple Inc. All Rights Reserved"
+  },
+  "home_page": {
+    "image_hero": {
+      "product_name": "iPhone 14 Pro",
+      "learn_more": "Learn More",
+      "buy": "Buy"
+    },
+    "product_hero": {
+      "title": "Buy iPhone 16 Pro",
+      "price": "From RMB 7,999",
+      "model": "Model",
+      "color": "Finish",
+      "memory": "Storage Capacity",
+      "add_cart": "Add to Cart"
+    },
+    "newarrivals": "New Arrivals",
+    "offers": "Special Offers"
+  }
+}

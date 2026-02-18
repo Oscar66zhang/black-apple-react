@@ -1,9 +1,10 @@
-import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <div>
-      <span>版权所有 @2099</span>
+      <span>{t("footer.copyright")}</span>
     </div>
   );
 };

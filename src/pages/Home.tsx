@@ -8,6 +8,7 @@ import ImageHero from "@/components/ImageHero";
 import { SUGGESTED_PROUDCT } from "../assets/data";
 import ProductHero from "@/components/ProductHero";
 import type { NewArrivalProps } from "@/components/NewArrival";
+import { useTranslation } from "react-i18next";
 
 const NewArrivalWithSoldOutCheck = withSoldOut((props: NewArrivalProps) => {
   const { title } = props;
@@ -22,6 +23,8 @@ const NewArrivalWithBannerAndSoldOutCheck = withBanner(
 const OfferWithSoldOutCheck = withSoldOut(Offer);
 
 function Home() {
+  const { t } = useTranslation();
+
   return (
     <div>
       <ImageHero />
@@ -30,7 +33,7 @@ function Home() {
         imageUrl={SUGGESTED_PROUDCT.imageSrc}
       />
       <ProductList
-        title={"上新品，各个添新意"}
+        title={t(`home_page.newarrivals`)}
         datalength={NEW_ARRIVALS_LIST.length}
       >
         {NEW_ARRIVALS_LIST.map((item) => (
@@ -42,10 +45,7 @@ function Home() {
         ))}
       </ProductList>
 
-      <ProductList
-        title={"限时折扣，买到就是赚到"}
-        datalength={OFFER_LIST.length}
-      >
+      <ProductList title={t(`home_page.offers`)} datalength={OFFER_LIST.length}>
         {OFFER_LIST.map((item) => (
           <OfferWithSoldOutCheck key={item.title} {...item} />
         ))}

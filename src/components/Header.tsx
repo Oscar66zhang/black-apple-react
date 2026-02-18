@@ -10,8 +10,22 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SHOPPING_PAGES } from "../assets/data/path";
 import { ShoppingCartContext } from "@/contexts/shoppingCart";
 import { AnimatePresence, motion } from "framer-motion";
+import { IoLanguageOutline } from "react-icons/io5";
+import store, { RootState } from "@/redux/store";
+import { languageSet, CultureCode } from "@/redux/i18nReducer";
+import { setCulture } from "@/redux/i18nSlice";
+import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
+  const { t } = useTranslation();
+  const currentLanguage = useSelector<RootState, CultureCode>(
+    (state: any) => state.i18n.currentLanguage,
+  );
+
+  console.log("currentLanguage:", currentLanguage);
+  const dispatch = useDispatch();
+
   const { cartItems } = useContext(ShoppingCartContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +33,7 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       if (query.trim()) {
@@ -30,7 +44,7 @@ const Header = () => {
   };
 
   //HTMLInputElement | null
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   //ref
   useEffect(() => {
@@ -39,6 +53,15 @@ const Header = () => {
       inputRef.current.focus();
     }
   }, [isSearchEnable]);
+
+  const handleLanguageChange = () => {
+    const currentIndex = languageSet.indexOf(currentLanguage);
+    const newIndex = (currentIndex + 1) % languageSet.length;
+    const nextLanguage = languageSet[newIndex];
+    store.dispatch(setCulture(nextLanguage));
+    dispatch(setCulture(nextLanguage));
+    console.log("Dispatched language change to:", nextLanguage);
+  };
 
   return (
     <nav
@@ -68,7 +91,7 @@ const Header = () => {
            }
         `}
           >
-            {page.title}
+            {t(`routes.${page.id}`)}
           </NavLink>
         ))}
       </div>
@@ -108,6 +131,9 @@ const Header = () => {
           <AiOutlineSearch size={24} />
         </button>
         <DarkToggle />
+        <button onClick={handleLanguageChange}>
+          <IoLanguageOutline size={24} />
+        </button>
         <button onClick={() => navigate("/cart")} className="relative">
           <AiOutlineShopping size={24} />
           <AnimatePresence>
@@ -159,7 +185,7 @@ const Header = () => {
           `}
               onClick={() => setIsOpen(false)}
             >
-              {page.title}
+              {t(`routes.${page.id}`)}
             </NavLink>
           ))}
         </div>
