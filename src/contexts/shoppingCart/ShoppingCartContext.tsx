@@ -6,6 +6,7 @@ interface ShoppingCartContextType {
   addToCart: (item: CartItem) => void;
   removeFromCart: (index: number) => void;
   updateItem: (index: number, newItem: CartItem) => void;
+  clearCart: () => void;
 }
 
 const defaultShoppingCartContext: ShoppingCartContextType = {
@@ -13,6 +14,7 @@ const defaultShoppingCartContext: ShoppingCartContextType = {
   addToCart: () => {},
   removeFromCart: () => {},
   updateItem: () => {},
+  clearCart: () => {},
 };
 
 const ShoppingCartContext = createContext<ShoppingCartContextType>(

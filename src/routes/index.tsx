@@ -5,12 +5,9 @@ import UserLayout from "@/layouts/UserLayout";
 import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
 import {
   About,
-  Computers,
-  IPad,
   Entertainment,
   Support,
-  Phones,
-  SmartHome,
+  Category,
   SignIn,
   Register,
   Home,
@@ -35,21 +32,14 @@ const router = createBrowserRouter([
         index: true, //默认子路由
         element: <Home />,
       },
-      { path: "about", element: <About />, errorElement: <ErrorPage /> },
       {
-        path: "computer",
-        element: <Computers />,
+        path: "categories/:category",
+        element: <Category />,
         errorElement: <ErrorPage />,
       },
-      { path: "ipad", element: <IPad />, errorElement: <ErrorPage /> },
+      { path: "about", element: <About />, errorElement: <ErrorPage /> },
       { path: "entertainment", element: <Entertainment /> },
       { path: "support", element: <Support />, errorElement: <ErrorPage /> },
-      {
-        path: "smarthome",
-        element: <SmartHome />,
-        errorElement: <ErrorPage />,
-      },
-      { path: "phone", element: <Phones />, errorElement: <ErrorPage /> },
       {
         path: "product-detail/:id", //product-detail/123
         element: <ProductDetail />,

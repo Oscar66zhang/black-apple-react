@@ -4,7 +4,7 @@ import {
   AiOutlineSearch,
   AiOutlineShopping,
 } from "react-icons/ai";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import DarkToggle from "./DarkToggle";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SHOPPING_PAGES } from "../assets/data/path";
@@ -28,6 +28,18 @@ const Header = () => {
       }
     }
   };
+
+  //HTMLInputElement | null
+  const inputRef = useRef(null);
+
+  //ref
+  useEffect(() => {
+    console.log("inputRef.current", inputRef.current);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isSearchEnable]);
+
   return (
     <nav
       className="flex items-center justify-between px-4 h-16  sticky top-0 z-50 
@@ -63,6 +75,7 @@ const Header = () => {
       {isSearchEnable && (
         <div className="relative">
           <input
+            ref={inputRef}
             className="peer border
            border-apple-gray-200 px-4 py-2 w-64 rounded-lg focus:outline-none focus:ring-2 
            focus:ring-apple-blue transition"

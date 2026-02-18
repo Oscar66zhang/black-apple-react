@@ -1,5 +1,5 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState, useMemo } from "react";
 import type { Product } from "@/types/custom";
 import { useDebounce } from "@/helpers/useDebounce";
 import Button from "@/components/Button";
@@ -91,12 +91,14 @@ const SearchResults = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("全部");
 
-  const filteredProducts = searchResults.filter((product) => {
-    const matchesCategory =
-      selectedCategory === "全部" || product.category === selectedCategory;
-    console.log("过滤后的产品:", product);
-    return matchesCategory;
-  });
+  const filteredProducts = useMemo(() => {
+    return searchResults.filter((product) => {
+      const matchesCategory =
+        selectedCategory === "全部" || product.category === selectedCategory;
+      console.log("过滤后的产品:", product);
+      return matchesCategory;
+    });
+  }, [searchResults, selectedCategory]);
 
   return (
     <div className="min-h-screen p-8">
@@ -123,7 +125,7 @@ const SearchResults = () => {
           <FilterButton
             key={filter}
             filter={filter}
-            isSelected={false}
+            isSelected={selectedCategory === filter}
             onClick={() => {
               setSelectedCategory(filter);
             }}

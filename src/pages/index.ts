@@ -15,3 +15,4 @@ export { default as ProductDetail } from "./ProductDetail/ProductDetail";
 export { default as SearchResults } from "./SearchResults";
 export { default as UserCenter } from "./UserCenter";
 export { default as ShoppingCart } from "./ShoppingCart";
+export { default as Category } from "./Category";
