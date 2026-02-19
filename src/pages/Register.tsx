@@ -1,6 +1,15 @@
 import { useState } from "react";
+import { useApiData } from "../hooks/useApiData";
 
 function SignUp() {
+  const { data, loading, error, fetchData } = useApiData(
+    "http://152.136.182.210:12231/api/auth/register",
+    {
+      method: "POST",
+      autoFetch: false,
+    },
+  );
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

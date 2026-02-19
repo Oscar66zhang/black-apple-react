@@ -6,6 +6,9 @@ import Button from "@/components/Button";
 import SearchResultCard from "@/components/SearchResultCard";
 import { ShoppingCartContext } from "@/contexts/shoppingCart";
 import FilterButton from "@/components/FilterButton";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, StoreDispach } from "@/redux/store";
+import { fetchSearchResults } from "@/redux/searchSlice";
 
 const filters = ["全部", "电脑", "手机", "平板", "其他"];
 
@@ -22,38 +25,26 @@ const SearchResults = () => {
     setSearchParams({ query: query || "", page: newPage.toString() });
   };
 
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
-
-  const search = async (signal: AbortSignal) => {
-    try {
-      const response = await fetch(
-        `http://152.136.182.210:12231/api/products?keyword=${debouncedQuery}`,
-        { signal },
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setSearchResults(data);
-    } catch (error: any) {
-      if (error.name === "AbortError") {
-        return;
-      }
-      console.error("Error fetching search results:", error);
-      setSearchResults([]);
-    }
-  };
+  const {
+    items: searchResults,
+    isLoading,
+    error,
+  } = useSelector((state: RootState) => state.search);
+  const dispatch = useDispatch<StoreDispach>();
 
   useEffect(() => {
-    //副作用逻辑
-    const controller = new AbortController();
-    //创建一个新的 AbortController 实例，用于取消请求
-    const signal = controller.signal;
-    search(signal);
+    if (!debouncedQuery) {
+      return;
+    }
+    const thunkPromise = dispatch(
+      fetchSearchResults({ keyword: debouncedQuery }),
+    );
+
     return () => {
-      controller.abort();
+      //组件卸载或关键词变化时取消未完成的请求
+      thunkPromise.abort();
     };
-  }, [debouncedQuery]); //依赖数组
+  }, [debouncedQuery, dispatch, page]); //依赖数组
   //空数组：[]:只在组件挂载 [mount] 时执行一次
   //有依赖：依赖变化时重新执行
   //不写依赖：每次渲染都会执行 (不推荐，容易浪费性能)
@@ -119,6 +110,21 @@ const SearchResults = () => {
         />
         <p className="mt-6">搜索关键词：{query}</p>
       </div>
+
+      {error && (
+        <div className="max-w-4xl mx-auto mb-6">
+          <p className="text-red-500 text-lg">{error}</p>
+        </div>
+      )}
+      {error == null && (
+        <div className="max-w-4xl mx-auto mb-6">
+          <p className="text-lg">
+            找到{" "}
+            <span className="font-semibold">{filteredProducts.length}</span>{" "}
+            个与“{debouncedQuery}”相关的产品
+          </p>
+        </div>
+      )}
 
       <div className="max-w-4xl mx-auto mb-8 flex gap-4">
         {filters.map((filter) => (
