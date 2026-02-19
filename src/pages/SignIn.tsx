@@ -1,27 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import useApiData from "@/hooks/useApiData";
+
 function SignIn() {
+  const { data, loading, error, fetchData } = useApiData<any>(
+    "http://152.136.182.210:12231/api/auth/login",
+    {
+      method: "POST",
+      autoFetch: false,
+    },
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email !== "abc@123.com" || password !== "123456") {
-      alert("邮箱或密码错误");
-      return;
-    }
-
-    //模拟登录逻辑
-    localStorage.setItem("token", "mocked_token");
-
-    //模拟登陆逻辑
-    navigate(
-      location.state?.from || "/", //优先挑战来源页
-      { replace: true },
-    );
+    await fetchData({
+      overrideBody: {
+        username: email,
+        password,
+      },
+    });
   };
+
+  useEffect(() => {
+    if (loading) return;
+    if (!loading && error) alert(error);
+    if (!loading && data) {
+      const token = data.token;
+      localStorage.setItem("token", token);
+      navigate(location.state?.from || "/",);
+    }
+  }, [data, error, loading]);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-black via-gray-800 to-gray-900 flex items-center justify-center p-4">

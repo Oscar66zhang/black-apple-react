@@ -38,6 +38,7 @@ const useApiData = <T>(apiUrl: string, options: UseApiOptions = {}) => {
                 || apiUrl, {
                 method: extraOptions?.overrideMethod || method,
                 headers: {
+                    "Content-Type": "application/json",
                     ...headers,
                     ...extraOptions?.overrideHeaders,
                 },
