@@ -23,7 +23,7 @@ const useApiData = <T>(apiUrl: string, options: UseApiOptions = {}) => {
     } = options;
 
     const [data, setData] = useState<T | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const abortControllerRef = useRef<AbortController | null>(null);

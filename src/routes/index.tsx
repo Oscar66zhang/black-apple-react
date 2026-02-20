@@ -17,6 +17,8 @@ import {
   SearchResults,
   UserCenter,
   ShoppingCart,
+  CheckOut,
+  OrderDetail,
 } from "../pages";
 import RequireAuth from "@/HOCS/RequireAuth";
 import { loadProducts } from "@/helpers/loaders";
@@ -61,6 +63,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       { path: "/cart", element: <ShoppingCart /> },
+      { path: "/checkout", element: <CheckOut /> },
+      { path: "/order/:id", element: <OrderDetail /> },
       { path: "*", element: <NotFound />, errorElement: <ErrorPage /> },
     ],
   },

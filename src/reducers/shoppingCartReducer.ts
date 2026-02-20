@@ -23,12 +23,18 @@ export const clearCart = () => ({
     type: "CLEAR_CART" as const,
 })
 
+export const syncCart = (items: CartItem[]) => ({
+    type: "SYNC_CART" as const,
+    payload: items,
+})
+
 //actions
 export type CartAction =
     | ReturnType<typeof addItem>
     | ReturnType<typeof removeItem>
     | ReturnType<typeof updateItem>
     | ReturnType<typeof clearCart>
+    | ReturnType<typeof syncCart>
 
 //reucer function
 const shoppingCartReducer: ImmerReducer<CartItem[], CartAction> = (draft, action) => {
@@ -62,6 +68,11 @@ const shoppingCartReducer: ImmerReducer<CartItem[], CartAction> = (draft, action
             draft.length = 0; //Clear the cart
             break;
         }
+
+        case "SYNC_CART": {
+            return action.payload;
+        }
+        
         // case "UPDATE_ITEM":
         default:
             break;

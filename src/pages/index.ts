@@ -16,3 +16,5 @@ export { default as SearchResults } from "./SearchResults";
 export { default as UserCenter } from "./UserCenter";
 export { default as ShoppingCart } from "./ShoppingCart";
 export { default as Category } from "./Category";
+export { default as CheckOut } from "./CheckOut";
+export { default as OrderDetail } from "./OrderDetail";

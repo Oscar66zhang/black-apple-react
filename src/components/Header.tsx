@@ -18,9 +18,12 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { AUTH_PAGES } from "../assets/data/path";
 import { parseJwt } from "../helpers/jwtHelper";
+import { logout } from "../redux/userSlice";
 
 const Header = () => {
   const [username, setUsername] = useState<string | null>(null);
+  const { token } = useSelector((state: RootState) => state.user);
+
   const { t } = useTranslation();
   const currentLanguage = useSelector<RootState, CultureCode>(
     (state: any) => state.i18n.currentLanguage,
@@ -76,10 +79,10 @@ const Header = () => {
         setUsername(decode.name);
       }
     }
-  }, []);
+  }, [token]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    dispatch(logout());
     setUsername(null);
     navigate("/auth/signin");
   };

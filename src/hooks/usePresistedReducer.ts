@@ -3,7 +3,7 @@ import useLocalStorage from "./useLocalStorage";
 import { useImmerReducer, ImmerReducer } from "use-immer";
 
 const usePresistedReducer = <S, A>(
-    reducer: Reducer<S, A>, key: string, initialState: S): [S, Dispatch<A>] => {
+    reducer: ImmerReducer<S, A>, key: string, initialState: S): [S, Dispatch<A>] => {
     // 1.先从localStorage读状态
     const [presistedState, setPersistedState] =
         useLocalStorage<S>(key, initialState);
